@@ -7,7 +7,8 @@ import UsersRepository from '../typeorm/repositories/UsersRepository';
 interface IRequest {
   email: string;
   password: string;
-  cpf: string;
+  cpf?: string;
+  is_admin?: number;
 }
 
 class CreateUserService {
@@ -17,7 +18,7 @@ class CreateUserService {
     if (emailExists) {
       throw new AppError('Email already in use');
     }
-    if (cpf.length !== 11) {
+    if (cpf && cpf.length !== 11) {
       throw new AppError('Your CPF must have at least 11 numbers');
     }
 
