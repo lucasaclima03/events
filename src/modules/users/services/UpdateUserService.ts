@@ -7,11 +7,11 @@ import UsersRepository from '../typeorm/repositories/UsersRepository';
 interface IRequest {
   id: string;
   email: string;
-  new_password: string;
-  old_password: string;
+  new_password?: string;
+  old_password?: string;
 }
 
-class UpdateUserService {
+class UpdateProfileService {
   public async execute({
     id,
     email,
@@ -20,13 +20,14 @@ class UpdateUserService {
   }: IRequest): Promise<User> {
     const usersRepository = getCustomRepository(UsersRepository);
     const user = await usersRepository.findById(id);
+
     if (!user) {
-      throw new AppError('User not found');
+      throw new AppError('User not found.');
     }
 
-    const userEmailExists = await usersRepository.findByEmail(email);
-    if (userEmailExists && userEmailExists.id != user.id) {
-      throw new AppError('This email already used');
+    const userUpdateEmail = await usersRepository.findByEmail(email);
+    if (userUpdateEmail && userUpdateEmail.id != user.id) {
+      throw new AppError('There is already one user with this email');
     }
 
     if (new_password && !old_password) {
@@ -36,7 +37,7 @@ class UpdateUserService {
     if (new_password && old_password) {
       const checkOldPassword = await compare(old_password, user.password);
       if (!checkOldPassword) {
-        throw new AppError('Old password dows not match');
+        throw new AppError('Old password does not match');
       }
       user.password = await hash(new_password, 8);
     }
@@ -49,4 +50,4 @@ class UpdateUserService {
   }
 }
 
-export default UpdateUserService;
+export default UpdateProfileService;
