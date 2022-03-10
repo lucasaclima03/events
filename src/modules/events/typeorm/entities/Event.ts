@@ -14,7 +14,7 @@ class Event {
   @Column()
   place: string;
 
-  @Column({ length: 10 })
+  @Column()
   day: string;
 
   @Column()

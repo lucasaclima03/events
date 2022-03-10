@@ -17,16 +17,24 @@ class EventsRepository extends Repository<Event> {
     return event;
   }
 
-  public async findByHour(hour: string): Promise<Event | undefined> {
+  public async findByPlace(place: string): Promise<Event | undefined> {
+    const event = await this.findOne({ where: { place } });
+    return event;
+  }
+
+  public async findByStartTime(start_time: string): Promise<Event | undefined> {
     const event = await this.findOne({
-      where: hour,
+      where: { start_time },
     });
 
     return event;
   }
 
-  public async findByPlace(place: string): Promise<Event | undefined> {
-    const event = await this.findOne({ where: place });
+  public async findByEndTime(end_time: string): Promise<Event | undefined> {
+    const event = await this.findOne({
+      where: { end_time },
+    });
+
     return event;
   }
 }
