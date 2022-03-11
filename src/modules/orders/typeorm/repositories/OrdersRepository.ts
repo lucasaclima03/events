@@ -16,6 +16,8 @@ class OrdersRepository extends Repository<Order> {
     });
     return order;
   }
+
+  /*
   public async createOrder({ user, event }: IRequest): Promise<Order> {
     const order = this.create({
       user,
@@ -25,6 +27,7 @@ class OrdersRepository extends Repository<Order> {
     await this.save(order);
     return order;
   }
+  */
 }
 
 export default OrdersRepository;
