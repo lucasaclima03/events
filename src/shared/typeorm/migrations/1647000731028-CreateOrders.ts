@@ -33,6 +33,10 @@ export class CreateOrders1647000731028 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'quantity',
+            type: 'int',
+          },
+          {
             name: 'is_confirmed',
             type: 'int',
           },
