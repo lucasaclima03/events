@@ -1,8 +1,9 @@
-import { Request, Response } from 'express';
+import { Request, response, Response } from 'express';
 import CreateEventService from '../services/CreateEventService';
+import ListEventService from '../services/ListEventsService';
 
 export default class EventsController {
-  public async create(request: Request, response: Response) {
+  public async create(request: Request, response: Response): Promise<Response> {
     const {
       place,
       day,
@@ -14,7 +15,7 @@ export default class EventsController {
       end_time,
     } = request.body;
     const createEvent = new CreateEventService();
-    const event = createEvent.execute({
+    const event = await createEvent.execute({
       place,
       day,
       title,
@@ -26,5 +27,11 @@ export default class EventsController {
     });
 
     return response.json(event);
+  }
+
+  public async index(request: Request, response: Response): Promise<Response> {
+    const listEvents = new ListEventService();
+    const events = await listEvents.execute();
+    return response.json(events);
   }
 }

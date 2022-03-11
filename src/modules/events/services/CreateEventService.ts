@@ -27,6 +27,7 @@ class CreateEventService {
     end_time,
   }: IRequest): Promise<Event> {
     const eventsRepository = getCustomRepository(EventsRepository);
+
     const dayHaveEvent = await eventsRepository.findByDay(day);
     const startTimeHaveEvent = await eventsRepository.findByStartTime(
       start_time,
@@ -38,6 +39,23 @@ class CreateEventService {
       throw new AppError(
         'this date already has an event scheduled for this time ',
       );
+    }
+
+    if (start_time.length < 2) {
+      throw new AppError('The start time must have at least 2 numbers');
+    }
+    if (end_time.length < 2) {
+      throw new AppError('The start time must have at least 2 numbers');
+    }
+    if (!tickets_avaiable) {
+      throw new AppError('You must inform the quantity of tickets');
+    }
+
+    if (!start_time) {
+      throw new AppError('You must inform start time/end time of this event');
+    }
+    if (!end_time) {
+      throw new AppError('You must inform start time/end time of this event');
     }
 
     const event = eventsRepository.create({
