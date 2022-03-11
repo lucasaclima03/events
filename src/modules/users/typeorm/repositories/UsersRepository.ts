@@ -32,6 +32,10 @@ class UsersRepository extends Repository<User> {
 
     return user;
   }
+  public async findAdmin(is_admin: number): Promise<User[] | undefined> {
+    const user = await this.find({ where: { is_admin: is_admin } });
+    return user;
+  }
 }
 
 export default UsersRepository;

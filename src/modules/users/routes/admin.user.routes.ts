@@ -17,4 +17,10 @@ adminRouter.post(
   adminController.create,
 );
 
+adminRouter.get(
+  '/',
+
+  adminController.index,
+);
+
 export default adminRouter;
