@@ -27,5 +27,6 @@ usersRouter.patch(
   usersController.update,
 );
 usersRouter.get('/', usersController.index);
+usersRouter.delete('/:id', usersController.delete);
 
 export default usersRouter;
