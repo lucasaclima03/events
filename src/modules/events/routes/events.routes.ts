@@ -1,12 +1,14 @@
 import { Router } from 'express';
 import EventsController from '../controllers/EventsController';
 import { celebrate, Joi, Segments } from 'celebrate';
+import isAuthenticated from '@shared/http/middlewares/isAuthenticated';
 
 const eventsRouter = Router();
 const eventsController = new EventsController();
 
 eventsRouter.post(
   '/',
+  isAuthenticated,
   celebrate({
     [Segments.BODY]: {
       place: Joi.string().required(),
@@ -21,9 +23,10 @@ eventsRouter.post(
   }),
   eventsController.create,
 );
-eventsRouter.get('/', eventsController.index);
+eventsRouter.get('/', isAuthenticated, eventsController.index);
 eventsRouter.patch(
   '/:id',
+  isAuthenticated,
   celebrate({
     [Segments.BODY]: {
       email: Joi.string().required(),
@@ -32,5 +35,6 @@ eventsRouter.patch(
     },
   }),
 );
+eventsRouter.delete('/', isAuthenticated, eventsController.delete);
 
 export default eventsRouter;

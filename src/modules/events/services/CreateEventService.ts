@@ -1,3 +1,4 @@
+import UsersRepository from '@modules/users/typeorm/repositories/UsersRepository';
 import AppError from '@shared/errors/AppError';
 
 import { getCustomRepository } from 'typeorm';
@@ -27,6 +28,7 @@ class CreateEventService {
     end_time,
   }: IRequest): Promise<Event> {
     const eventsRepository = getCustomRepository(EventsRepository);
+    const usersRepository = getCustomRepository(UsersRepository);
 
     const dayHaveEvent = await eventsRepository.findByDay(day);
     const startTimeHaveEvent = await eventsRepository.findByStartTime(

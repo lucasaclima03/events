@@ -16,4 +16,6 @@ sessionsRouter.post(
   sessionsController.create,
 );
 
+sessionsRouter.post('/admin', sessionsController.createAdminSession);
+
 export default sessionsRouter;

@@ -1,5 +1,6 @@
 import { Request, response, Response } from 'express';
 import CreateEventService from '../services/CreateEventService';
+import DeleteEventService from '../services/DeleteEventService';
 import ListEventService from '../services/ListEventsService';
 
 export default class EventsController {
@@ -33,5 +34,13 @@ export default class EventsController {
     const listEvents = new ListEventService();
     const events = await listEvents.execute();
     return response.json(events);
+  }
+
+  public async delete(request: Request, response: Response): Promise<Response> {
+    const { id } = request.params;
+    const deleteEvent = new DeleteEventService();
+    const remove = await deleteEvent.execute({ id });
+
+    return response.json([]);
   }
 }
