@@ -24,17 +24,7 @@ eventsRouter.post(
   eventsController.create,
 );
 eventsRouter.get('/', isAuthenticated, eventsController.index);
-eventsRouter.patch(
-  '/:id',
-  isAuthenticated,
-  celebrate({
-    [Segments.BODY]: {
-      email: Joi.string().required(),
-      new_password: Joi.string().required(),
-      old_password: Joi.string().required(),
-    },
-  }),
-);
-eventsRouter.delete('/', isAuthenticated, eventsController.delete);
+
+eventsRouter.delete('/:id', eventsController.delete);
 
 export default eventsRouter;

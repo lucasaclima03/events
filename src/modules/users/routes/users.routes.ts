@@ -8,6 +8,7 @@ const usersController = new UsersController();
 
 usersRouter.post(
   '/',
+  isAuthenticated,
   celebrate({
     [Segments.BODY]: {
       email: Joi.string().required(),
@@ -18,6 +19,7 @@ usersRouter.post(
 );
 usersRouter.patch(
   '/:id',
+  isAuthenticated,
   celebrate({
     [Segments.BODY]: {
       email: Joi.string().required(),
@@ -28,6 +30,6 @@ usersRouter.patch(
   usersController.update,
 );
 usersRouter.get('/', isAuthenticated, usersController.index);
-usersRouter.delete('/:id', usersController.delete);
+usersRouter.delete('/:id', isAuthenticated, usersController.delete);
 
 export default usersRouter;
